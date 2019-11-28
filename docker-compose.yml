@@ -1,0 +1,26 @@
+version: '2.2'
+
+services:
+  server:
+    image: "todo_test"
+    build: .
+    ports:
+       - "3000:3000"
+    restart: "on-failure"
+    volumes:
+      - .:/todo_test
+    links:
+      - postgres:db
+    stdin_open: true
+    tty:        true
+
+  postgres:
+    image:  "postgres:9"
+    ports:
+      - "5432:5432"
+    volumes:
+       - db-data:/var/lib/postgresql/data
+    restart: "always"
+
+volumes:
+  db-data:
