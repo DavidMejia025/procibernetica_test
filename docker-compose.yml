@@ -3,7 +3,8 @@ version: '2.2'
 services:
   server:
     image: "todo_test"
-    build: .
+    build:
+      context: .
     ports:
        - "3000:3000"
     restart: "on-failure"
