@@ -17,6 +17,12 @@ class Task < ApplicationRecord
 
   enum status: %i[to_do done]
 
+  scope :by_status, -> (status) do
+    status = status == :to_do ? 0 : 1
+
+    where('status = ?', status)
+  end
+
   def set_default_role
     self.status ||= :to_do
   end

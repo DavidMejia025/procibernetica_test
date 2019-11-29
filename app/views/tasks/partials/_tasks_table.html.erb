@@ -8,9 +8,14 @@
       </tr>
     </thead>
     <tbody>
-      <% @tasks.each do |task| %>
+      <% tasks.each do |task| %>
         <tr>
-          <th class="done"> box </th>
+          <th class="done">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="materialChecked2">
+              <label class="form-check-label" for="materialChecked2"></label>
+            </div>
+          </th>
           <td class="task_title"> <%= link_to task.title, task, remote: true%></td>
           <td class="task_menu">
             menu

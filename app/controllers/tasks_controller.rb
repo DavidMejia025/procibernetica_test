@@ -2,8 +2,9 @@ class TasksController < ApplicationController
   before_action :find_task, except: %i[index create]
 
   def index
-    @task  = Task.new
-    @tasks = Task.all
+    @task        = Task.new
+    @to_do_tasks = Task.by_status(:to_do)
+    @done_tasks  = Task.by_status(:done)
   end
 
   def create
