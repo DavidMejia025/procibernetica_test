@@ -13,3 +13,33 @@
  *= require_tree .
  *= require_self
  */
+
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+ body{
+   margin: 150px;
+ }
+
+ .blank_space{
+   margin-top: 100px;
+ }
+
+ .search_bar{
+   margin-top: 80px;
+   margin-top: 80px;
+   border: red;
+ }
+
+ .box{
+   border-color: red;
+   border-style: solid;
+ }
+
+.done{
+  width: 20px;
+}
+
+.task_title{
+  width: 400px;
+}

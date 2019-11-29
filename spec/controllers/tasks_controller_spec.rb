@@ -5,7 +5,7 @@ RSpec.describe TasksController, type: :controller do
     subject { get :create, params: param }
 
     context "when task can be created" do
-      let!(:param) { {title: "Clean apartment"} }
+      let!(:param) { {task: {title: "Clean apartment"}} }
 
       it "tasks counter increased by one" do
         expect {
@@ -22,7 +22,7 @@ RSpec.describe TasksController, type: :controller do
     end
 
     context "when task can not be created" do
-      let!(:param) { {nothing: "foo"} }
+      let!(:param) { {task: {name: "Nothing"}} }
 
       it "number of tasks does not change" do
         expect {
@@ -30,37 +30,37 @@ RSpec.describe TasksController, type: :controller do
           }.to change(Task.all, :count).by(0)
       end
 
+      it "flash error message" do
+        subject
+        expect(flash[:error]).to match(/New Task could not be created/)
+      end
+
       it { is_expected.to redirect_to(action: :new) }
     end
   end
 
   describe "#show" do
+    let!(:task) { create :task }
 
-    subject { get :show, params: param }
+    subject { get :show, params: param.merge({:format => 'js'}) }
 
     context "when task can be fetch" do
-      xit "returns status ok" do
-        subject
-        expect(response.status).to eq(200)
-      end
+      let(:param) { {id: 1} }
 
-      xit "" do
-        subject
-        expect(response.body).to eq("New Task was created successfully".to_json)
+      it "renders js template" do
       end
     end
 
     context "when task can not be fetch" do
+      let(:param) { {id: 10} }
+
       context "when task does not exist" do
-        xit "returns status 422" do
+        it "flash error message" do
           subject
-          expect(response.status).to eq(422)
+          expect(flash[:error]).to match(/Task with id 10 does not exist/)
         end
 
-        xit "returns errors in the body " do
-          subject
-          expect(response.body).to eq(errors)
-        end
+        it { is_expected.to redirect_to(action: :index) }
       end
     end
   end
