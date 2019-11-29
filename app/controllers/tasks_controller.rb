@@ -21,11 +21,15 @@ class TasksController < ApplicationController
   def update
     @task = find_task
 
-    if @task.update(task_params)
-      flash.now[:success] = "#{@task.title} task was Successfully updated"
-      redirect_to action: "index"
-    else
-      flash.now[:error] = "#{@task.title} task could not be updated"
+    begin
+      if @task.update(task_params)
+        flash.now[:success] = "#{@task.title} task was Successfully updated and now is #{@task.status}"
+        redirect_to action: "index"
+      else
+        raise(ActiveRecord::RecordInvalid, @user)
+      end
+    rescue
+      flash.now[:error] = "Task could not be updated"
       redirect_to action: "index"
     end
   end
@@ -49,7 +53,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title)
+    params.require(:task).permit(:title, :status)
   end
 
   def find_task

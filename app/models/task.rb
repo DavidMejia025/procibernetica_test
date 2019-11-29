@@ -7,8 +7,17 @@
 #  done       :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  status     :integer
 #
 
 class Task < ApplicationRecord
+  after_initialize :set_default_role, if: :new_record?
+
   validates :title, presence: true
+
+  enum status: %i[to_do done]
+
+  def set_default_role
+    self.status ||= :to_do
+  end
 end
