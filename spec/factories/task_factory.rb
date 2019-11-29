@@ -8,9 +8,11 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+'require faker'
 
 FactoryBot.define do
   factory :task do
-    title  { Faker::Name }
+    id     { 1 }
+    title  { "go to the gym" }
   end
 end

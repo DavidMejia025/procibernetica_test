@@ -1,0 +1,33 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if @task %>
+          <%= form_for @task, remote: true do |f| %>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <%=label_tag(:title, "Title")%>
+                <%=f.text_field :title, class:"title_field form-control form-control-lg"%>
+              </div>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <% if @task.title%>
+              <%=f.submit "Edit Task", class:"btn_submit btn btn-primary"%>
+            <%else%>
+              <%=f.submit "Create Task", class:"btn_submit btn btn-primary"%>
+            <%end%>
+            <!-- <button type="button" class="btn btn-primary">Create Expense</button> -->
+          </div>
+          <%end%>
+      <% end %>
+        </div>
+    </div>
+  </div>
+</div>
