@@ -12,6 +12,24 @@
 //
 //= require jquery
 //= require jquery_ujs
+
 //= require bootstrap-sprockets
-//= require turbolinks
+
 //= require_tree .
+$(document).ready(function() {
+  $( '.form-check-input' ).on( 'click', function() {
+    check_box_id = $( '.form-check-input' ).attr('id')
+    check_box    = $('#' + check_box_id)
+
+    if (!check_box.is(":checked")){
+        $.ajax({
+      		url: "/tasks/" + check_box_id,
+      		type: "PATCH",
+          data: {'task': {'status':'done'}},
+      	})
+      	.done(function(data){
+      		console.log('DONE')
+      	})
+      }
+  });
+})

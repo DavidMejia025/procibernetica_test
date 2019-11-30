@@ -1,6 +1,48 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
+  describe "#index" do
+    let!(:to_do_task) { create(:task) }
+    let!(:done_task)  { create(:task, id: 2, status: "done") }
+
+    subject { get :index }
+
+    context "fetch Tasks data" do
+      it "assign tasks with status to_do to @to_do_tasks" do
+        subject
+        expect(assigns(:to_do_tasks)).to eq([to_do_task])
+      end
+
+      it "assign tasks with status to_do to @to_do_tasks" do
+        subject
+        expect(assigns(:done_tasks)).to eq([done_task])
+      end
+    end
+  end
+
+  describe "#destroy" do
+    let(:task) { create(:task) }
+    let!(:param) { {id: 1} }
+    subject { delete :destroy, params: param }
+
+    context "when Tasks exist" do
+      it "deletes the user" do
+        expect {
+          subject
+        }.to change(Task.all, :count).by(0)
+      end
+    end
+
+    context "when task does not exist" do
+      it "flash error message" do
+        subject
+        expect(flash[:error]).to match(/Task with id 1 does not exist/)
+      end
+
+      it { is_expected.to redirect_to(action: :index) }
+    end
+  end
+
   describe "#create" do
     subject { get :create, params: param }
 

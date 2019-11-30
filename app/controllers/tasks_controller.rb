@@ -45,10 +45,15 @@ class TasksController < ApplicationController
 
   def destroy
     puts "destroying the action now"
-    @task = Task.find(params[:id])
-    @task.destroy
+    begin
+      @task = Task.find(params[:id])
+      @task.destroy
 
-    redirect_to action: "index"
+      redirect_to action: "index"
+    rescue
+      flash.now[:error] = "Task does not exist"
+      redirect_to action: "index"
+    end
   end
 
   private

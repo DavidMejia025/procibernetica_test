@@ -48,7 +48,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails'
 end
 
 group :development do
@@ -61,9 +61,13 @@ group :development do
 end
 
 group :test do
+  gem 'rspec-core', git: 'https://github.com/rspec/rspec-core'
+  gem 'rspec-expectations', git: 'https://github.com/rspec/rspec-expectations'
+  gem 'rspec-mocks', git: 'https://github.com/rspec/rspec-mocks'
+  gem 'rspec-support', git: 'https://github.com/rspec/rspec-support'
   gem 'rails-controller-testing'
-  gem "rspec-json_expectations"
-  gem "rspec-rails", "~> 3.8"
+  #gem "rspec-json_expectations"
+  #gem "rspec-rails", "~> 3.8"
   gem "rspec_junit_formatter"
   gem 'simplecov'
   gem 'simplecov-rcov'
