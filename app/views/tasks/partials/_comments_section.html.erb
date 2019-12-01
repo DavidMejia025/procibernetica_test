@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-md-12">
+    <h4>Comments</h4>
+  </div>
+  <div class="col-md-12">
+    <%= render 'tasks/partials/comment_form' %>
+  </div>
+  <div class="col-md-12">
+    <% if @task.comments.any? %>
+      <ul>
+        <% @task.comments.each do |comment| %>
+          <li> <%= comment.text %> </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

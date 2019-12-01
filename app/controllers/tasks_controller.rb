@@ -2,9 +2,7 @@ class TasksController < ApplicationController
   before_action :find_task, except: %i[index create]
 
   def index
-    @task        = Task.new
-    @to_do_tasks = Task.by_status(:to_do)
-    @done_tasks  = Task.by_status(:done)
+    load_index_data
   end
 
   def create
@@ -36,7 +34,9 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = find_task
+    @category = Category.new
+    @comment  = Comment.new
+    @task     = find_task
 
     respond_to do |format|
       format.js
@@ -59,7 +59,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :status)
+    params.require(:task).permit(:title, :status, :description, :deadline, :category_id)
   end
 
   def find_task
@@ -68,5 +68,14 @@ class TasksController < ApplicationController
   rescue
     flash.now[:error] = "Task with id #{params[:id]} does not exist"
     redirect_to action: "index"
+  end
+
+  def load_index_data
+    @task        = Task.new
+    @category    = Category.new
+    @comment     = Comment.new
+    @categories  = Category.all
+    @to_do_tasks = Task.by_status(:to_do)
+    @done_tasks  = Task.by_status(:done)
   end
 end

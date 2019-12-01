@@ -2,16 +2,21 @@
 #
 # Table name: tasks
 #
-#  id         :bigint           not null, primary key
-#  title      :string
-#  done       :boolean          default(FALSE)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  status     :integer
+#  id          :bigint           not null, primary key
+#  title       :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  status      :integer
+#  description :text
+#  deadline    :date
+#  category_id :integer          default(0)
 #
 
 class Task < ApplicationRecord
   after_initialize :set_default_role, if: :new_record?
+
+  has_many    :comments
+  belongs_to  :category
 
   validates :title, presence: true
 

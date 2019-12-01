@@ -12,8 +12,11 @@
         <tr>
           <th class="done">
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="materialChecked2">
-              <label class="form-check-label" for="materialChecked2"></label>
+              <% if task.status == "done" %>
+                <input type="checkbox" class="form-check-input" id= <%= task.id %>, checked>
+              <% else %>
+                <input type="checkbox" class="form-check-input" id= <%= task.id %>>
+              <% end %>
             </div>
           </th>
           <td class="task_title"> <%= link_to task.title, task, remote: true%></td>
