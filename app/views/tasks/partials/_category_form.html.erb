@@ -1,0 +1,15 @@
+<div class="category_form">
+  <%= form_for @category, remote: true do |f| %>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="col-sm-6">
+          <%=label_tag(:name, "Name")%>
+          <%=f.text_field :name, class:"title_field form-control form-control-lg"%>
+        </div>
+        <div class="col-sm-2">
+          <%=f.submit "Create Category", class:"btn_submit btn btn-primary btn-sm"%>
+        </div>
+      </div>
+    </div>
+  <%end%>
+</div>

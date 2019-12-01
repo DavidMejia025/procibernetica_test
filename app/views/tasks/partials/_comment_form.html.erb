@@ -1,0 +1,15 @@
+<div class="category_form">
+  <%= form_for @comment, remote: true do |f| %>
+    <div class="row">
+      <div class="col-sm-12">
+        <%=label_tag(:text, "Comment")%>
+        <%=f.text_field :text, class:"title_field form-control form-control-lg"%>
+      </div>
+      <%= f.hidden_field :task_id %>
+      <%= hidden_field_tag 'task_id', @task.id  %>
+      <div class="col-sm-12">
+        <%=f.submit "Create Coment", class:"btn_submit btn btn-primary"%>
+      </div>
+    </div>
+  <%end%>
+</div>

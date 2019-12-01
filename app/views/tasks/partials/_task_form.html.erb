@@ -1,0 +1,47 @@
+<div class="task_form">
+  <div class="col-sm-12">
+      <%= render 'tasks/partials/category_form' %>
+  </div>
+  <%= form_for @task do |f| %>
+    <div class="row">
+      <div class="col-sm-12">
+        <%=label_tag(:title, "Title")%>
+        <%=f.text_field :title, class:"title_field form-control form-control-lg"%>
+      </div>
+      <div class="col-sm-12">
+        <%=label_tag(:description, "Description")%>
+        <%=f.text_field :description, class:"title_field form-control form-control-lg"%>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="col-sm-8">
+          <%=label_tag(:category, "Category")%>
+        </div>
+        <div class="col-sm-8">
+          <%=f.collection_select :category_id, Category.all, :id, :name , class:"category_field form-control"%>
+        </div>
+        <div class="col-sm-2 col-md-offset-2">
+          <p class="add_new_category"> <span class="glyphicon glyphicon-calendar"></span> </p>
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-offset-1">
+        <div class="row">
+          <div class="col-sm-12">
+            <%=label_tag(:deadline, "Deadline")%>
+          </div>
+          <div class="col-sm-12">s
+            <%= f.text_field :deadline, data:{ provide:'datepicker' } %> <span class="glyphicon glyphicon-calendar"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      <% if @task.title%>
+        <%=f.submit "Edit Task", class:"btn_submit btn btn-primary"%>
+      <%else%>
+        <%=f.submit "Create Task", class:"btn_submit btn btn-primary"%>
+      <%end%>
+    </div>
+  <%end%>
+</div>

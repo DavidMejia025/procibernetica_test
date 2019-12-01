@@ -8,26 +8,14 @@
       </div>
       <div class="modal-body">
         <% if @task %>
-          <%= form_for @task, remote: true do |f| %>
-
-            <div class="row">
-              <div class="col-sm-12">
-                <%=label_tag(:title, "Title")%>
-                <%=f.text_field :title, class:"title_field form-control form-control-lg"%>
-              </div>
-            </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <% if @task.title%>
-              <%=f.submit "Edit Task", class:"btn_submit btn btn-primary"%>
-            <%else%>
-              <%=f.submit "Create Task", class:"btn_submit btn btn-primary"%>
-            <%end%>
-            <!-- <button type="button" class="btn btn-primary">Create Expense</button> -->
-          </div>
-          <%end%>
-      <% end %>
-        </div>
+          <%= render 'tasks/partials/task_form' %>
+        <% end %>
+      </div>
+      <div class="comments_section">
+        <% if @task.id %>
+          <%= render 'tasks/partials/comments_section' %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
