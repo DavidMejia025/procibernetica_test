@@ -2,20 +2,51 @@ require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
   describe "#index" do
-    let!(:to_do_task) { create(:task) }
-    let!(:done_task)  { create(:task, id: 2, status: "done") }
+    let!(:to_do_task)  { create(:task) }
+    let!(:done_task)   { create(:task, id: 2, title: "go to the supermarket", status: "done") }
+    let(:search_input) { nil }
 
-    subject { get :index }
+    subject { get :index, params: {search_input: search_input} }
 
     context "fetch Tasks data" do
-      it "assign tasks with status to_do to @to_do_tasks" do
-        subject
-        expect(assigns(:to_do_tasks)).to eq([to_do_task])
+      context "when search_input param is included " do
+
+        it "calls QueryService" do
+          expect(QueryService).to receive(:query).exactly(2).times
+          subject
+        end
+
+        context "and do not match any record" do
+          let(:search_input) { "foo" }
+
+          it "return empty array for to_do and done tasks" do
+            subject
+            expect(assigns(:to_do_tasks)).to eq([])
+            expect(assigns(:done_tasks)).to eq([])
+          end
+        end
+
+        context "and do not match only one record" do
+          let(:search_input) { "supermarket" }
+
+          it "return empty array for to_do and done tasks" do
+            subject
+            expect(assigns(:to_do_tasks)).to eq([])
+            expect(assigns(:done_tasks)).to eq([done_task])
+          end
+        end
       end
 
-      it "assign tasks with status to_do to @to_do_tasks" do
-        subject
-        expect(assigns(:done_tasks)).to eq([done_task])
+      context "when search_input param is not included" do
+        it "assign tasks with status to_do to @to_do_tasks" do
+          subject
+          expect(assigns(:to_do_tasks)).to eq([to_do_task])
+        end
+
+        it "assign tasks with status to_do to @to_do_tasks" do
+          subject
+          expect(assigns(:done_tasks)).to eq([done_task])
+        end
       end
     end
   end
@@ -44,10 +75,12 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe "#create" do
+    let!(:category) { (create :category, id: 1) }
+
     subject { get :create, params: param }
 
     context "when task can be created" do
-      let!(:param) { {task: {title: "Clean apartment"}} }
+      let!(:param) { {task: {title: "Clean apartment", category_id: 1}} }
 
       it "tasks counter increased by one" do
         expect {
@@ -77,7 +110,7 @@ RSpec.describe TasksController, type: :controller do
         expect(flash[:error]).to match(/New Task could not be created/)
       end
 
-      it { is_expected.to redirect_to(action: :new) }
+      it { is_expected.to redirect_to(action: :index) }
     end
   end
 
@@ -108,7 +141,7 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe "#update" do
-    let!(:task) { create :task }
+    let!(:task) { (create :task, id: 1) }
 
     subject { get :update, params: param }
 

@@ -13,9 +13,8 @@
 #
 FactoryBot.define do
   factory :task do
-    association :comment, factory: :comment
-    
-    id     { 1 }
+    category
+
     title  { "go to the gym" }
     status { "to_do" }
   end
