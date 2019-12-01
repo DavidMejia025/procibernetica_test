@@ -9,11 +9,12 @@
 #  updated_at :datetime         not null
 #  status     :integer
 #
-'require faker'
-
 FactoryBot.define do
   factory :task do
+    association :comment, factory: :comment
+    
     id     { 1 }
     title  { "go to the gym" }
+    status { "to_do" }
   end
 end
