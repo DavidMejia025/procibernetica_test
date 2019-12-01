@@ -1,5 +1,5 @@
 <div class="task_form">
-  <div class="col-sm-12">
+  <div class="col-sm-12 create_new_category_block" style="display:none">
       <%= render 'tasks/partials/category_form' %>
   </div>
   <%= form_for @task do |f| %>
@@ -13,15 +13,15 @@
         <%=f.text_field :description, class:"title_field form-control form-control-lg"%>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 add_new_category">
         <div class="col-sm-8">
           <%=label_tag(:category, "Category")%>
         </div>
         <div class="col-sm-8">
           <%=f.collection_select :category_id, Category.all, :id, :name , class:"category_field form-control"%>
         </div>
-        <div class="col-sm-2 col-md-offset-2">
-          <p class="add_new_category"> <span class="glyphicon glyphicon-calendar"></span> </p>
+        <div class="col-sm-2 col-md-offset-2 add_new_category">
+          <p class="add_new_category"> <span class="glyphicon glyphicon-calendar add_new_category"></span> </p>
         </div>
       </div>
       <div class="col-sm-5 col-md-offset-1">

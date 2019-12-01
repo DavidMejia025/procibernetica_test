@@ -17,6 +17,14 @@
 
 //= require_tree .
 $(document).ready(function() {
+  $( '.add_new_category' ).on( 'click', function() {
+    $(".create_new_category_block").css('display', 'inline-block');
+  });
+
+  $( '.category_submit' ).on( 'click', function() {
+    $(".create_new_category_block").css('display', 'none');
+  });
+
   $( '.form-check-input' ).on( 'click', function() {
     check_box_id = $( '.form-check-input' ).attr('id')
     check_box    = $('#' + check_box_id)
