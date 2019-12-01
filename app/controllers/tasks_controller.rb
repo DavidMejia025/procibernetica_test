@@ -3,6 +3,8 @@ class TasksController < ApplicationController
 
   def index
     load_index_data
+
+    filter_data(search_input: params[:search_input]) if params[:search_input]
   end
 
   def create
@@ -13,7 +15,7 @@ class TasksController < ApplicationController
       redirect_to action: "index"
     else
       flash.now[:error] = "New Task could not be created"
-      redirect_to action: "new"
+      redirect_to action: "index"
     end
   end
 
@@ -77,5 +79,10 @@ class TasksController < ApplicationController
     @categories  = Category.all
     @to_do_tasks = Task.by_status(:to_do)
     @done_tasks  = Task.by_status(:done)
+  end
+
+  def filter_data(search_input:)
+    @to_do_tasks = QueryService.query(tasks: @to_do_tasks, search_input: search_input)
+    @done_tasks  = QueryService.query(tasks: @done_tasks,  search_input: search_input)
   end
 end
