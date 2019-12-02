@@ -51,10 +51,12 @@ class TasksController < ApplicationController
 
   def destroy
     begin
-      @task = Task.find(params[:id])
+      @task            = Task.find(params[:id])
+      task_for_message = @task
+
       @task.destroy
 
-      NotificationService.notify(task: @task, event: :delete)
+      NotificationService.notify(task: task_for_message, event: :delete)
 
       redirect_to action: "index"
     rescue

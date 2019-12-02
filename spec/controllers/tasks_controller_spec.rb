@@ -52,15 +52,23 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe "#destroy" do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, id: 1) }
     let!(:param) { {id: 1} }
+
     subject { delete :destroy, params: param }
 
     context "when Tasks exist" do
+      before { allow(NotificationService).to receive(:notify).and_return(true) }
+
       it "deletes the user" do
         expect {
           subject
-        }.to change(Task.all, :count).by(0)
+        }.to change(Task.all, :count).by(-1)
+      end
+
+      it "calls notifification service with delete event" do
+        expect(NotificationService).to receive(:notify).with({task: task, event: :delete})
+        subject
       end
     end
 
