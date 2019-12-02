@@ -13,7 +13,7 @@
 #
 
 class Task < ApplicationRecord
-  after_initialize :set_default_role, if: :new_record?
+  after_initialize :set_default_values, if: :new_record?
 
   has_many    :comments
   belongs_to  :category
@@ -28,7 +28,8 @@ class Task < ApplicationRecord
     where('status = ?', status)
   end
 
-  def set_default_role
-    self.status ||= :to_do
+  def set_default_values
+    self.status   ||= :to_do
+    self.deadline ||= (Date.today  + 1.year)
   end
 end

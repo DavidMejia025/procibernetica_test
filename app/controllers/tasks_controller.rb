@@ -73,12 +73,13 @@ class TasksController < ApplicationController
   end
 
   def load_index_data
+    @date        = Date.today
     @task        = Task.new
     @category    = Category.new
     @comment     = Comment.new
     @categories  = Category.all
-    @to_do_tasks = Task.by_status(:to_do)
-    @done_tasks  = Task.by_status(:done)
+    @to_do_tasks = Task.by_status(:to_do).order(deadline: :asc)
+    @done_tasks  = Task.by_status(:done).order(deadline: :asc)
   end
 
   def filter_data(search_input:)

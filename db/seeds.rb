@@ -19,7 +19,6 @@ create_task = -> (status) do
   category.tasks.create(
     title:       Faker::Name.name_with_middle,
     description: Faker::Lorem.paragraph(sentence_count: 7),
-    deadline:    Time.now + 7.days,
     status:      status
   )
 end

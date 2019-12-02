@@ -1,30 +1,19 @@
 <div class="tasks_table">
-  <table id="dtVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <table id="dtVerticalScrollExample" class="table table-borderless table-sm" cellspacing="0" width="100%">
     <thead>
       <tr>
         <th class="done" scope="col"></th>
-        <th class="task_title" scope="col">TO DO</th>
+        <th class="task_title text-cente" scope="col"><%= name %></th>
         <th class="task_menu" scope="col"></th>
       </tr>
     </thead>
     <tbody>
       <% tasks.each do |task| %>
-        <tr>
-          <th class="done">
-            <div class="form-check">
-              <% if task.status == "done" %>
-                <input type="checkbox" class="form-check-input" id= <%= task.id %>, checked>
-              <% else %>
-                <input type="checkbox" class="form-check-input" id= <%= task.id %>>
-              <% end %>
-            </div>
-          </th>
-          <td class="task_title"> <%= link_to task.title, task, remote: true%></td>
-          <td class="task_menu">
-            menu
-            <%= link_to 'Kill',  { action: :destroy, id: task.id }, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
+        <% if task.deadline < @date %>
+          <%= render 'tasks/partials/task_row_delayed', { task: task } %>
+        <% else %>
+          <%= render 'tasks/partials/task_row', { task: task } %>
+        <% end %>
       <% end  %>
     </tbody>
   </table>
