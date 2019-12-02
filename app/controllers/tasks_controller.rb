@@ -11,6 +11,8 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
+      NotificationService.notify(task: @task, event: :create)
+
       flash.now[:success] = "New Task was Successfully created"
       redirect_to action: "index"
     else
@@ -24,6 +26,8 @@ class TasksController < ApplicationController
 
     begin
       if @task.update(task_params)
+        NotificationService.notify(task: @task, event: :update)
+
         flash.now[:success] = "#{@task.title} task was Successfully updated and now is #{@task.status}"
         redirect_to action: "index"
       else
@@ -46,10 +50,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    puts "destroying the action now"
     begin
       @task = Task.find(params[:id])
       @task.destroy
+
+      NotificationService.notify(task: @task, event: :delete)
 
       redirect_to action: "index"
     rescue

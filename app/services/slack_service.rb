@@ -1,8 +1,9 @@
 class SlackService < NotificationService
   CHANNEL = "#general".freeze
-  
+
   def self.send_message(message:)
-    if Rails.env.production?
+    if false
+    #if Rails.env.production?
       slack = Slack::Notifier.new(ENV["SLACK_URL"])
 
       attachhment = {text: message}

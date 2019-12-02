@@ -32,4 +32,8 @@ class Task < ApplicationRecord
     self.status   ||= :to_do
     self.deadline ||= (Date.today  + 1.year)
   end
+
+  def notification_message(event:)
+    "Task #{self.title} has been #{event}"
+  end
 end

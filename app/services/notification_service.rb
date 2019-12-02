@@ -1,11 +1,13 @@
 class NotificationService
   NOTIFICATION = {
-    create: ["SlackService"],
+    create: ["SlackService", "MailerService"],
     update: ["SlackService"],
-    delete: ["SlackService"],
+    delete: ["SlackService", "MailerService"]
   }.freeze
 
-  def self.notify(event:, message:)
+  def self.notify(task:, event:)
+    message = task.notification_message(event: event)
+
     NOTIFICATION[event].each do|notification|
       notification.constantize.send("send_message", message: message)
     end
