@@ -16,10 +16,13 @@ clear_db = -> () {
 create_task = -> (status) do
   category =  rand(2) != 0 ? Category.all.sample : Category.first
 
+  rand_date = rand(3) == 0 ? Date.today - 7 : Date.today + 7
+
   category.tasks.create(
     title:       Faker::Name.name_with_middle,
     description: Faker::Lorem.paragraph(sentence_count: 7),
-    status:      status
+    status:      status,
+    deadline:   rand_date
   )
 end
 
@@ -39,11 +42,11 @@ Category.create(name: "General")
   Category.create(name: Faker::Name.name_with_middle)
 end
 
-5.times do |i|
+10.times do |i|
   create_task.call(:to_do)
 end
 
-5.times do |i|
+10.times do |i|
   create_task.call(:done)
 end
 
