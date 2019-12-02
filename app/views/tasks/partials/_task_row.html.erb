@@ -1,0 +1,15 @@
+<tr>
+  <td>
+    <div class="form-check">
+      <% if task.status == "done" %>
+        <input type="checkbox" class="form-check-input" id= <%= task.id %>, checked>
+      <% else %>
+        <input type="checkbox" class="form-check-input" id= <%= task.id %>>
+      <% end %>
+    </div>
+  </td>
+  <td class="task_title"> <%= link_to task.title, task, remote: true%></td>
+  <td class="task_menu">
+    <%= link_to '', { action: :destroy, id: task.id }, method: :delete,  class: "glyphicon glyphicon-remove", data: { confirm: 'Are you sure?' } %>
+  </td>
+</tr>

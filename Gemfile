@@ -31,6 +31,8 @@ gem 'httparty'
 gem 'faker'
 # annotate db templates
 gem 'annotate'
+# slack messages
+gem "slack-notifier"
 
 
 # Use Puma as the app server
